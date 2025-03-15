@@ -1,15 +1,12 @@
 const express = require('express');
-const { resolve } = require('path');
+require('dotenv').config();
 
 const app = express();
-const port = 3010;
-
-app.use(express.static('static'));
+const port = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
-  res.sendFile(resolve(__dirname, 'pages/index.html'));
+  const isAdmin = process.env.IS_ADMIN === 'true';
+  res.send(isAdmin ? "Welcome, Admin!" : "Welcome, User!");
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
-});
+app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
